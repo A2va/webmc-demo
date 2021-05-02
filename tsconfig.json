@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es2017",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": true
+  }
+}
