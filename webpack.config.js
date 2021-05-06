@@ -2,11 +2,11 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = (env, argv) => ({
   entry: './src/App.ts',
-  //devtool: 'source-map', // For production
-  devtool:'eval-source-map',// For dev
+  devtool: 'source-map', // For production
+  //devtool:'eval-source-map',// For dev
   output: {
     path: __dirname + '/docs',
-    filename: 'js/bundle.js'
+    filename: 'js/webmc.js'
   },
   resolve: {
     extensions: ['.ts', '.js']
