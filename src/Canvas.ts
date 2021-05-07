@@ -54,43 +54,49 @@ export class RenderCanvas {
 
             });
 
+
         // Setup Event 
+        this.canvas.oncontextmenu = this.contextmenuEvt
+        this.canvas.onresize = this.resizeEvt;
 
-        this.canvas.addEventListener('mousedown', evt => {
+        this.canvas.onwheel = this.wheelEvt;
+        this.canvas.onmouseup = this.mouseupEvt;
+        this.canvas.onmousemove = this.mousemoveEvt;
+        this.canvas.onmousedown = this.mousedownEvt;
+
+    }
+
+    resizeEvt = (evt: UIEvent) => {
+        evt.preventDefault();
+    }
+
+    contextmenuEvt = (evt: MouseEvent) => {
+        evt.preventDefault();
+    }
+
+    mouseupEvt = (evt: MouseEvent) => {
+        this.dragPos = null;
+    }
+
+    mousedownEvt = (evt: MouseEvent) => {
+        this.dragPos = [evt.clientX, evt.clientY];
+        this.dragButton = evt.button;
+    }
+
+    mousemoveEvt = (evt: MouseEvent) => {
+        if (this.dragPos) {
+            if (this.dragButton === 0) {
+                this.yRotation += (evt.clientX - this.dragPos[0]) / 100;
+                this.xRotation += (evt.clientY - this.dragPos[1]) / 100;
+            }
             this.dragPos = [evt.clientX, evt.clientY];
-            this.dragButton = evt.button;
-        });
-
-        this.canvas.addEventListener('mousemove', evt => {
-            if (this.dragPos) {
-                if (this.dragButton === 0) {
-                    this.yRotation += (evt.clientX - this.dragPos[0]) / 100;
-                    this.xRotation += (evt.clientY - this.dragPos[1]) / 100;
-                }
-                this.dragPos = [evt.clientX, evt.clientY];
-                requestAnimationFrame(this.render.bind(this));
-            }
-        });
-
-        this.canvas.addEventListener('mouseup', evt => {
-            this.dragPos = null;
-        });
-
-        this.canvas.addEventListener('contextmenu', evt => {
-            evt.preventDefault();
-        });
-
-        this.canvas.addEventListener('wheel', evt => {
-            this.viewDist += evt.deltaY / 100
             requestAnimationFrame(this.render.bind(this));
-        })
+        }
+    }
 
-        window.addEventListener('resize', () => {
-            if (this.resize()) {
-                requestAnimationFrame(this.render.bind(this));
-            }
-        })
-
+    wheelEvt = (evt: WheelEvent) => {
+        this.viewDist += evt.deltaY / 100
+        requestAnimationFrame(this.render.bind(this));
     }
 
     resize() {
