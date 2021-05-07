@@ -64,6 +64,36 @@ export class RenderCanvas {
         this.canvas.onmousemove = this.mousemoveEvt;
         this.canvas.onmousedown = this.mousedownEvt;
 
+        this.canvas.ontouchstart = this.ontouchstartEvt
+        this.canvas.ontouchend = this.ontouchendEvt;
+        this.canvas.ontouchmove = this.ontouchmoveEvt;
+        this.canvas.ontouchcancel = this.ontouchcancelEvt;
+
+    }
+
+    ontouchcancelEvt = (evt: TouchEvent) => {
+        evt.preventDefault();
+    }
+
+    ontouchmoveEvt = (evt: TouchEvent) => {
+        const touch: Touch = evt.targetTouches[0];
+        if (this.dragPos) {
+            if (this.dragButton === 0) {
+                this.yRotation += (touch.clientX - this.dragPos[0]) / 100;
+                this.xRotation += (touch.clientY - this.dragPos[1]) / 100;
+            }
+            this.dragPos = [touch.clientX, touch.clientY];
+            requestAnimationFrame(this.render.bind(this));
+        }
+    }
+
+    ontouchendEvt = (evt: TouchEvent) => {
+        this.dragPos = null;
+    }
+
+    ontouchstartEvt = (evt: TouchEvent) => {
+        this.dragPos = [evt.targetTouches[0].clientX, evt.targetTouches[0].clientY];
+        this.dragButton = 0;
     }
 
     resizeEvt = (evt: UIEvent) => {
