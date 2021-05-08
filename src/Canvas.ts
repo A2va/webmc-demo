@@ -77,6 +77,20 @@ export class RenderCanvas {
 
     ontouchmoveEvt = (evt: TouchEvent) => {
         const touch: Touch = evt.targetTouches[0];
+        const touches: TouchList = evt.targetTouches;
+        const par = document.querySelectorAll("p")[0]
+        par.innerText = evt.targetTouches.length.toString();
+        // if (evt.targetTouches.length > 1) {
+        //     const lastDistance = Math.sqrt(
+        //         (touches[0].clientX - touches[1].clientX) *
+        //         (touches[0].clientX - touches[1].clientX) +
+        //         (touches[0].clientY - touches[1].clientY) *
+        //         (touches[0].clientY - touches[1].clientY)
+        //     );
+        //     this.viewDist += lastDistance / 100;
+        //     requestAnimationFrame(this.render.bind(this));
+        //     return;
+        // }
         if (this.dragPos) {
             if (this.dragButton === 0) {
                 this.yRotation += (touch.clientX - this.dragPos[0]) / 100;
